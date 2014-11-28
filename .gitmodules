@@ -1,3 +1,6 @@
+[submodule "_vim/bundle/tagbar"]
+	path = _vim/bundle/tagbar
+	url = https://github.com/majutsushi/tagbar.git
 [submodule "_vim/bundle/fugitive"]
 	path = _vim/bundle/fugitive
 	url = http://github.com/tpope/vim-fugitive.git
