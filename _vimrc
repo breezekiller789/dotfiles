@@ -118,6 +118,16 @@ map <leader>n :NERDTreeToggle<CR>
 map <leader>f :CtrlP<CR>
 map <leader>b :CtrlPBuffer<CR>
 
+" Makes CtrlP index faster in linux
+" ref: http://freehaha.blogspot.tw/2012/11/ctrlpvim.html
+let g:ctrlp_user_command = {
+    \ 'types': {
+      \ 1: ['.git', 'cd %s && git ls-files -c -o --exclude-standard'],
+      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+      \ },
+    \ 'fallback': 'find %s -type f'
+    \ }
+
 " Ack searching
 nmap <leader>a <Esc>:Ack!
 
