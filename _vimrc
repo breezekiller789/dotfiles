@@ -251,7 +251,8 @@ if has("gui_running")
     set guioptions-=T
 endif
 
-colorscheme molokai
+" colorscheme molokai
+colorscheme vividchalk
 
 " Paste from clipboard
 map <leader>p "+p
