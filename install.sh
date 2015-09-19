@@ -17,6 +17,8 @@ function unlink_file {
     if [ -e "${target}.df.bak" ] && [ -L "${target}" ]; then
         unlink ${target}
         mv $target.df.bak $target
+    elif [ -L "${target}" ]; then
+        unlink ${target}
     fi
 }
 

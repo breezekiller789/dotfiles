@@ -119,19 +119,20 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 # Set $TERM for libvte terminals that set $TERM wrong (like gnome-terminal)
-{
-  [ "_$TERM" = "_xterm" ] && type ldd && type grep && type tput && [ -L "/proc/$PPID/exe" ] && {
-    if ldd /proc/$PPID/exe | grep libvte; then
-      if [ "`tput -Txterm-256color colors`" = "256" ]; then
-        TERM=xterm-256color
-      elif [ "`tput -Txterm-256color colors`" = "256" ]; then
-        TERM=xterm-256color
-      elif tput -T xterm; then
-        TERM=xterm
-      fi
-    fi
-  }
-} >/dev/null 2>/dev/null
+# {
+#   [ "_$TERM" = "_xterm" ] && type ldd && type grep && type tput && [ -L "/proc/$PPID/exe" ] && {
+#     if ldd /proc/$PPID/exe | grep libvte; then
+#       if [ "`tput -Txterm-256color colors`" = "256" ]; then
+#         TERM=xterm-256color
+#       elif [ "`tput -Txterm-256color colors`" = "256" ]; then
+#         TERM=xterm-256color
+#       elif tput -T xterm; then
+#         TERM=xterm
+#       fi
+#     fi
+#   }
+# } >/dev/null 2>/dev/null
+export TERM=xterm-256color
 
 venwrap=`type -P virtualenvwrapper.sh`
 if [ "$venwrap" != "" ]; then
@@ -140,8 +141,8 @@ fi
 
 # alias vim="emacs"
 
-PYTHONSTARTUP=~/.pythonrc.py
-export PYTHONSTARTUP
+# PYTHONSTARTUP=~/.pythonrc.py
+# export PYTHONSTARTUP
 
 parse_git_branch ()
 {
@@ -157,8 +158,8 @@ parse_svn_repository_root() {
   svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
 }
 set -o vi
-export EDITOR="emacs"
-export GIT_EDITOR="emacs"
+export EDITOR="vim"
+export GIT_EDITOR="vim"
 
 # Add git and svn branch names
 export PS1="$PS1\$(parse_git_branch)\$(parse_svn_branch) "

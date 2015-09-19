@@ -171,7 +171,6 @@ set wildignore+=*.egg-info/**
 
 set grepprg=ack         " replace the default grep program with ack
 
-
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
@@ -251,8 +250,12 @@ if has("gui_running")
     set guioptions-=T
 endif
 
-" colorscheme molokai
 colorscheme vividchalk
+" colorscheme molokai
+set t_Co=256
+set background=dark
+highlight Normal ctermbg=NONE
+highlight nonText ctermbg=NONE
 
 " Paste from clipboard
 map <leader>p "+p
