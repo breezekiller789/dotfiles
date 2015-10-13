@@ -1,4 +1,11 @@
 set editing-mode vi
+
+set completion-ignore-case on
+
 set keymap vi-command
 "gg": beginning-of-history
 "G": end-of-history
+
+set keymap vi-insert
+"\C-l": clear-screen
+"\C-w": backward-kill-word
