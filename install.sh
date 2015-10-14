@@ -77,7 +77,8 @@ while getopts n option; do
     esac
 done
 
+git submodule update --init --recursive
+
 if [ -z $no_update ]; then
-    git submodule update --init --recursive
     git submodule foreach --recursive git pull origin master
 fi
