@@ -1,2 +1,3 @@
 alias ll="ls --color=auto -al"
 alias cls='clear'
+alias l="ls -CF"
