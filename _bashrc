@@ -193,3 +193,10 @@ _complete_hosts () {
 
 complete -F _complete_hosts ssh
 complete -F _complete_hosts host
+
+if [ "`which brew`" != "" -a -f $(brew --prefix 2>/dev/null)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
+# Honor Homebrew installations
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH
