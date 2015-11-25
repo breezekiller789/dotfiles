@@ -77,6 +77,10 @@ while getopts n option; do
     esac
 done
 
+submodules=`git submodule | awk '{print $2}'`
+for x in _vim/bundle/*; do
+    echo "$submodules" | grep $x >/dev/null 2>&1 || rm -rf $x
+done
 git submodule update --init --recursive
 
 if [ -z $no_update ]; then
