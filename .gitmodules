@@ -7,9 +7,6 @@
 [submodule "_vim/bundle/git"]
 	path = _vim/bundle/git
 	url = https://github.com/tpope/vim-git.git
-[submodule "_vim/bundle/pyflakes"]
-	path = _vim/bundle/pyflakes
-	url = https://github.com/mitechie/pyflakes-pathogen.git
 [submodule "_vim/bundle/ack"]
 	path = _vim/bundle/ack
 	url = https://github.com/mileszs/ack.vim.git
@@ -34,9 +31,6 @@
 [submodule "_vim/bundle/nerdtree"]
 	path = _vim/bundle/nerdtree
 	url = https://github.com/vim-scripts/The-NERD-tree.git
-[submodule "_vim/bundle/ropevim"]
-	path = _vim/bundle/ropevim
-	url = https://github.com/sontek/rope-vim.git
 [submodule "_vim/bundle/acp"]
 	path = _vim/bundle/acp
 	url = https://github.com/vim-scripts/AutoComplPop.git
@@ -64,3 +58,6 @@
 [submodule "_vim/bundle/ctrlp"]
 	path = _vim/bundle/ctrlp
 	url = https://github.com/kien/ctrlp.vim.git
+[submodule "_vim/bundle/python-mode"]
+	path = _vim/bundle/python-mode
+	url = https://github.com/klen/python-mode.git

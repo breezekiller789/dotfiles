@@ -134,11 +134,6 @@ nmap <leader>a <Esc>:Ack!
 " Load the Gundo window
 map <leader>g :GundoToggle<CR>
 
-" Jump to the definition of whatever the cursor is on
-map <leader>j :RopeGotoDefinition<CR>
-
-" Rename whatever the cursor is on (including references to it)
-map <leader>r :RopeRename<CR>
 " ==========================================================
 " Pathogen - Allows us to organize our vim plugins
 " ==========================================================
@@ -256,6 +251,39 @@ set t_Co=256
 set background=dark
 highlight Normal ctermbg=NONE
 highlight nonText ctermbg=NONE
+
+" Python-mode
+" Activate rope
+" Keys:
+" K             Show python docs
+" <Ctrl-Space>  Rope autocomplete
+" <Ctrl-c>g     Rope goto definition
+" <Ctrl-c>d     Rope show documentation
+" <Ctrl-c>f     Rope find occurrences
+" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+" [[            Jump on previous class or function (normal, visual, operator modes)
+" ]]            Jump on next class or function (normal, visual, operator modes)
+" [M            Jump on previous class or method (normal, visual, operator modes)
+" ]M            Jump on next class or method (normal, visual, operator modes)
+" <Ctrl-]>      Jump to definition
+" <leader>r     Run python code
+" <leader>R     Rename a class/function/variable
+
+let g:pymode_rope = 1
+
+" Override go-to.definition key shortcut to Ctrl-]
+let g:pymode_rope_goto_definition_bind = "<C-]>"
+let g:pymode_rope_rename_bind = "<leader>R"
+
+" Load run code plugin
+let g:pymode_run = 1
+let g:pymode_run_key = "<leader>r"
+" let g:pymode_debug = 1
+
+" "Linting
+let g:pymode_lint = 1
+let g:pymode_lint_checkers = 'pyflakes,pep8,pylint'
+let g:pymode_lint_ignore = 'C0111,F0401'
 
 " Paste from clipboard
 map <leader>p "+p
