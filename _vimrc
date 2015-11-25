@@ -270,7 +270,7 @@ highlight nonText ctermbg=NONE
 " <leader>R     Rename a class/function/variable
 
 let g:pymode_rope = 1
-let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion = 0
 
 " Override go-to.definition key shortcut to Ctrl-]
 let g:pymode_rope_goto_definition_bind = "<C-]>"
