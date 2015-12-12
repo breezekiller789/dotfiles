@@ -123,20 +123,7 @@ fi
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
-# Set $TERM for libvte terminals that set $TERM wrong (like gnome-terminal)
-# {
-#   [ "_$TERM" = "_xterm" ] && type ldd && type grep && type tput && [ -L "/proc/$PPID/exe" ] && {
-#     if ldd /proc/$PPID/exe | grep libvte; then
-#       if [ "`tput -Txterm-256color colors`" = "256" ]; then
-#         TERM=xterm-256color
-#       elif [ "`tput -Txterm-256color colors`" = "256" ]; then
-#         TERM=xterm-256color
-#       elif tput -T xterm; then
-#         TERM=xterm
-#       fi
-#     fi
-#   }
-# } >/dev/null 2>/dev/null
+
 export TERM=xterm-256color
 
 venwrap=`type -P virtualenvwrapper.sh`
@@ -147,8 +134,6 @@ if [ "$venwrap" != "" ]; then
     source $venwrap
 fi
 
-# alias vim="emacs"
-
 # PYTHONSTARTUP=~/.pythonrc.py
 # export PYTHONSTARTUP
 
@@ -156,21 +141,12 @@ parse_git_branch ()
 {
   git branch 2> /dev/null | grep '*' | sed 's#*\ \(.*\)#(git::\1)#'
 }
-parse_svn_branch() {
-  parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk -F / '{print "(svn::"$1 "/" $2 ")"}'
-}
-parse_svn_url() {
-  svn info 2>/dev/null | sed -ne 's#^URL: ##p'
-}
-parse_svn_repository_root() {
-  svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
-}
 set -o vi
 export EDITOR="vim"
 export GIT_EDITOR="vim"
 
-# Add git and svn branch names
-export PS1="$PS1\$(parse_git_branch)\$(parse_svn_branch) "
+# Add git branch names
+export PS1="$PS1\$(parse_git_branch) "
 
 
 # /etc/profile.d/complete-hosts.sh
@@ -200,3 +176,7 @@ fi
 
 # Honor Homebrew installations
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
+
+if hash docker-machine >/dev/null 2>&1 && test "`docker-machine status default`" = "Running"; then
+    eval "$(docker-machine env default)"
+fi

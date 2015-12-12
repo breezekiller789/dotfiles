@@ -284,7 +284,7 @@ let g:pymode_run_key = "<leader>r"
 " "Linting
 let g:pymode_lint = 1
 let g:pymode_lint_checkers = 'pyflakes,pep8,pylint'
-let g:pymode_lint_ignore = 'C0111,F0401'
+let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
 
 " Paste from clipboard
 map <leader>p "+p
