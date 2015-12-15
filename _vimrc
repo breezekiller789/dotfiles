@@ -142,6 +142,12 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+" XXX: this would go wrong if snipmate is removed
+" Use tab to scroll through autocomplete menus
+" autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
+autocmd VimEnter * imap <expr> <Tab> !snipMate#CanBeTriggered() ? "<C-N>" : "<Plug>snipMateNextOrTrigger"
+autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
+
 " ==========================================================
 " Basic Settings
 " ==========================================================
@@ -269,8 +275,16 @@ highlight nonText ctermbg=NONE
 " <leader>r     Run python code
 " <leader>R     Rename a class/function/variable
 
+let g:pymode = 1
 let g:pymode_rope = 1
-let g:pymode_rope_completion = 0
+let g:pymode_rope_completion = 1
+let g:pymode_rope_completion_on_dot = 1
+let g:pymode_rope_autoimport = 0
+
+" Drags down speed too much
+let g:pymode_folding = 0
+
+let g:pymode_syntax = 1
 
 " Override go-to.definition key shortcut to Ctrl-]
 let g:pymode_rope_goto_definition_bind = "<C-]>"
@@ -283,7 +297,8 @@ let g:pymode_run_key = "<leader>r"
 
 " "Linting
 let g:pymode_lint = 1
-let g:pymode_lint_checkers = 'pyflakes,pep8,pylint'
+let g:pymode_lint_on_fly = 0
+let g:pymode_lint_checkers = ['pyflakes,pep8,pylint']
 let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
 
 " Paste from clipboard
@@ -305,10 +320,6 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " Javascript
 " ==========================================================
 au BufRead *.js set makeprg=jslint\ %
-
-" Use tab to scroll through autocomplete menus
-"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
 
 let g:acp_completeoptPreview=1
 
