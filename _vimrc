@@ -307,7 +307,12 @@ let g:pymode_lint_on_fly = 0
 let g:pymode_lint_checkers = ['pyflakes,pep8,pylint']
 let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
 
+" ==========================================================
+" YouCompleteMe Settings
+" ==========================================================
 inoremap <C-\> <C-X><C-O>
+" with YouCompleteMe, ctags is no longer needed: replace with YCM functions
+nnoremap <C-]> :sp<CR>:YcmCompleter GoTo<CR>
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Paste from clipboard
