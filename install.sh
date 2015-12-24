@@ -83,6 +83,12 @@ for x in _vim/bundle/*; do
 done
 git submodule update --init --recursive
 
+if [ ! -f _vim/bundle/YouCompleteMe/third_party/ycmd/ycm_core.so ];
+    pushd _vim/bundle/YouCompleteMe
+    ./install.py --clang-completer
+    popd
+fi
+
 if [ -z $no_update ]; then
     git submodule foreach --recursive git pull origin master
 fi

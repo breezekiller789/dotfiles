@@ -66,6 +66,9 @@ endfu
 
 nmap <leader>sb :call SplitScroll()<CR>
 
+" Easier moving of code blocks (better indentation)
+vnoremap < <gv
+vnoremap > >gv
 
 "<CR><C-w>l<C-f>:set scrollbind<CR>
 
@@ -145,7 +148,10 @@ call pathogen#helptags()
 " XXX: this would go wrong if snipmate is removed
 " Use tab to scroll through autocomplete menus
 " autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-autocmd VimEnter * imap <expr> <Tab> !snipMate#CanBeTriggered() ? "<C-N>" : "<Plug>snipMateNextOrTrigger"
+imap <C-J> <Plug>snipMateNextOrTrigger
+smap <C-J> <Plug>snipMateNextOrTrigger
+" autocmd VimEnter * imap <expr> <Tab> !snipMate#CanBeTriggered() ? "<C-N>" : "<Plug>snipMateNextOrTrigger"
+autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<C-P>"
 autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
 
 " ==========================================================
@@ -277,8 +283,8 @@ highlight nonText ctermbg=NONE
 
 let g:pymode = 1
 let g:pymode_rope = 1
-let g:pymode_rope_completion = 1
-let g:pymode_rope_completion_on_dot = 1
+let g:pymode_rope_completion = 0
+let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
 
 " Drags down speed too much
@@ -300,6 +306,8 @@ let g:pymode_lint = 1
 let g:pymode_lint_on_fly = 0
 let g:pymode_lint_checkers = ['pyflakes,pep8,pylint']
 let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
+
+let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Paste from clipboard
 map <leader>p "+p
