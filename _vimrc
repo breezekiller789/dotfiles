@@ -307,6 +307,7 @@ let g:pymode_lint_on_fly = 0
 let g:pymode_lint_checkers = ['pyflakes,pep8,pylint']
 let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
 
+inoremap <C-\> <C-X><C-O>
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Paste from clipboard
