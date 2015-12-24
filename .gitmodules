@@ -64,3 +64,15 @@
 [submodule "_vim/bundle/YouCompleteMe"]
 	path = _vim/bundle/YouCompleteMe
 	url = https://github.com/Valloric/YouCompleteMe.git
+[submodule "_vim/bundle/vim-fugitive"]
+	path = _vim/bundle/vim-fugitive
+	url = https://github.com/tpope/vim-fugitive.git
+[submodule "_vim/bundle/vim-powerline"]
+	path = _vim/bundle/vim-powerline
+	url = https://github.com/Lokaltog/vim-powerline.git
+[submodule "_vim/bundle/vim-commentary"]
+	path = _vim/bundle/vim-commentary
+	url = https://github.com/tpope/vim-commentary.git
+[submodule "_vim/bundle/vim-repeat"]
+	path = _vim/bundle/vim-repeat
+	url = https://github.com/tpope/vim-repeat.git
