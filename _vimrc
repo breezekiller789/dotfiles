@@ -182,6 +182,13 @@ set grepprg=ack         " replace the default grep program with ack
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
 
+" Keep search pattern at the center of the screen
+nnoremap <silent> n nzz
+nnoremap <silent> N Nzz
+nnoremap <sileen> * *zz
+nnoremap <sileen> # #zz
+nnoremap <sileen> g* g*zz
+
 " Disable the colorcolumn when switching modes.  Make sure this is the
 " first autocmd for the filetype here
 "autocmd FileType * setlocal colorcolumn=0
@@ -215,6 +222,9 @@ set foldlevel=99            " don't fold by default
 
 " don't outdent hashes
 inoremap # #
+
+" Esc is too far away
+inoremap jk <Esc>
 
 " close preview window automatically when we move around
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
