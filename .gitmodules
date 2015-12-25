@@ -76,3 +76,6 @@
 [submodule "_vim/bundle/vim-repeat"]
 	path = _vim/bundle/vim-repeat
 	url = https://github.com/tpope/vim-repeat.git
+[submodule "_vim/bundle/ultisnips"]
+	path = _vim/bundle/ultisnips
+	url = https://github.com/SirVer/ultisnips.git

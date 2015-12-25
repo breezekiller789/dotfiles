@@ -145,14 +145,17 @@ filetype off
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
-" XXX: this would go wrong if snipmate is removed
-" Use tab to scroll through autocomplete menus
+" Done by YouCompleteMe
 " autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-imap <C-J> <Plug>snipMateNextOrTrigger
-smap <C-J> <Plug>snipMateNextOrTrigger
-" autocmd VimEnter * imap <expr> <Tab> !snipMate#CanBeTriggered() ? "<C-N>" : "<Plug>snipMateNextOrTrigger"
-autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<C-P>"
-autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
+" autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
+
+let g:UltiSnipsExpandTrigger = "<C-J>"
+let g:UltiSnipsListSnippets = "<C-L>"
+let g:UltiSnipsJumpForwardTrigger = "<C-J>"
+let g:UltiSnipsJumpBackwardTrigger = "<C-K>"
+
+" Disable paste mode when leaving insert mode
+au InsertLeave * set nopaste
 
 " ==========================================================
 " Basic Settings
@@ -185,9 +188,9 @@ nnoremap <leader>. :lcd %:p:h<CR>
 " Keep search pattern at the center of the screen
 nnoremap <silent> n nzz
 nnoremap <silent> N Nzz
-nnoremap <sileen> * *zz
-nnoremap <sileen> # #zz
-nnoremap <sileen> g* g*zz
+nnoremap <silent> * *zz
+nnoremap <silent> # #zz
+nnoremap <silent> g* g*zz
 
 " Disable the colorcolumn when switching modes.  Make sure this is the
 " first autocmd for the filetype here
@@ -222,9 +225,6 @@ set foldlevel=99            " don't fold by default
 
 " don't outdent hashes
 inoremap # #
-
-" Esc is too far away
-inoremap jk <Esc>
 
 " close preview window automatically when we move around
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -318,12 +318,14 @@ let g:pymode_lint_on_fly = 0
 let g:pymode_lint_checkers = ['pyflakes,pep8,pylint']
 let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
 
+let g:pymode_breakpoint = 0
+
 " ==========================================================
 " YouCompleteMe Settings
 " ==========================================================
 inoremap <C-\> <C-X><C-O>
 " with YouCompleteMe, ctags is no longer needed: replace with YCM functions
-nnoremap <C-]> :sp<CR>:YcmCompleter GoTo<CR>
+au FileType c,cpp,h,hpp nnoremap <C-]> :sp<CR>:YcmCompleter GoTo<CR>
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 
 " Paste from clipboard
@@ -363,8 +365,6 @@ au FileType coffee setlocal expandtab shiftwidth=4 tabstop=8 softtabstop=4 smart
 au BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 " Don't let pyflakes use the quickfix window
 let g:pyflakes_use_quickfix = 0
-
-
 
 " Add the virtualenv's site-packages to vim path
 if has('python')

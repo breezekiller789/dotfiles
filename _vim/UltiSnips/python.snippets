@@ -1,0 +1,37 @@
+snippet lic "My favorite license" b
+# ${1:one line to give the program's name and a brief description}
+# Copyright `date +%Y` Yu-Cheng (Henry) Huang
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+# 	http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+${0}
+endsnippet
+
+snippet sig "My signature" b
+# ****************************************************************************
+#   FileName     [ ${1:`!p snip.rv = snip.fn`} ]
+#   Package      [ ${2:`pwd | xargs -n1 basename`} ]
+#   Synopsis     [ $3 ]
+#   Author       [ Yu-Cheng (Henry) Huang ]
+#   Copyright    [ Copyleft(c) `date +%Y` Yu-Cheng (Henry) Huang ]
+# ****************************************************************************
+endsnippet
+
+snippet bt "Set breakpoint"
+try:
+    from IPython.core.debugger import Pdb; pdb = Pdb()
+    from IPython import embed; embed()
+except:
+    import pdb
+    from code import interact
+    interact(local=dict(globals(), **locals()))
+endsnippet
