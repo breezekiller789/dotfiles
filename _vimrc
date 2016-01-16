@@ -294,7 +294,7 @@ highlight nonText ctermbg=NONE
 
 let g:pymode = 1
 let g:pymode_rope = 1
-let g:pymode_rope_completion = 0
+let g:pymode_rope_completion = 1
 let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
 
@@ -310,7 +310,7 @@ let g:pymode_rope_rename_bind = "<leader>R"
 " Load run code plugin
 let g:pymode_run = 1
 let g:pymode_run_key = "<leader>r"
-" let g:pymode_debug = 1
+let g:pymode_debug = 0
 
 " "Linting
 let g:pymode_lint = 1
@@ -328,6 +328,9 @@ inoremap <C-\> <C-X><C-O>
 " with YouCompleteMe, ctags is no longer needed: replace with YCM functions
 au FileType c,cpp,h,hpp nnoremap <C-]> :sp<CR>:YcmCompleter GoTo<CR>
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
+let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1 }
+" use acp
+let g:ycm_filetype_blacklist = { 'python': 1 }
 
 " Paste from clipboard
 map <leader>p "+p
