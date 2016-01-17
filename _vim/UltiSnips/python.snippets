@@ -43,3 +43,11 @@ endsnippet
 snippet akw "*args, **kwargs" w
 *args, **kwargs
 endsnippet
+
+snippet werkzeug "shutdown werkzeug server"
+func = request.environ.get('werkzeug.server.shutdown')
+if func is None:
+	raise RuntimeError('Not running with the Werkzeug server')
+print 'Shutting down Werkzeug server...'
+func()
+endsnippet

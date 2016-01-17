@@ -44,6 +44,10 @@ function install_if_needed {
 
 function install_prerequisites {
     install_if_needed ctags
+    # needed by syntastic (ignore if you don't develop in jsx)
+    read -p "Do you need jsxhint? (yes or no) "
+    [[ $ans =~ [Yy].* ]] && (`which jsxhint` || npm install -g jsxhint || \
+        echo 'Install npm and run `npm install -g jsxhint` to enable jsxhint')
 }
 
 if [ "$1" = "vim" ]; then

@@ -76,3 +76,15 @@
 [submodule "_vim/bundle/ultisnips"]
 	path = _vim/bundle/ultisnips
 	url = https://github.com/SirVer/ultisnips.git
+[submodule "_vim/bundle/tern_for_vim"]
+	path = _vim/bundle/tern_for_vim
+	url = https://github.com/ternjs/tern_for_vim.git
+[submodule "_vim/bundle/syntastic"]
+	path = _vim/bundle/syntastic
+	url = https://github.com/scrooloose/syntastic
+[submodule "_vim/bundle/vim-javascript"]
+	path = _vim/bundle/vim-javascript
+	url = https://github.com/pangloss/vim-javascript
+[submodule "_vim/bundle/vim-jsx"]
+	path = _vim/bundle/vim-jsx
+	url = https://github.com/mxw/vim-jsx

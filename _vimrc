@@ -55,20 +55,21 @@ let mapleader=","             " change the leader to be a comma vs slash
 " Seriously, guys. It's not like :W is bound to anything anyway.
 command! W :w
 
-fu! SplitScroll()
-    :wincmd v
-    :wincmd w
-    execute "normal! \<C-d>"
-    :set scrollbind
-    :wincmd w
-    :set scrollbind
-endfu
+" fu! SplitScroll()
+"     :wincmd v
+"     :wincmd w
+"     execute "normal! \<C-d>"
+"     :set scrollbind
+"     :wincmd w
+"     :set scrollbind
+" endfu
 
-nmap <leader>sb :call SplitScroll()<CR>
+" nmap <leader>sb :call SplitScroll()<CR>
 
-" Easier moving of code blocks (better indentation)
-vnoremap < <gv
-vnoremap > >gv
+map <leader>s :sp<CR>
+
+" <C-O> is used by tmux
+inoremap <C-\> <C-X><C-O>
 
 "<CR><C-w>l<C-f>:set scrollbind<CR>
 
@@ -99,8 +100,8 @@ map <leader>dt :set makeprg=python\ manage.py\ test\|:call MakeGreen()<CR>
 map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
 
 " open/close the quickfix window
-nmap <leader>c :copen<CR>
-nmap <leader>cc :cclose<CR>
+nmap <leader>co :copen<CR>
+nmap <leader>cc :cclose<CR>:pclose<CR>
 
 " for when we forget to use sudo to open/edit a file
 cmap w!! w !sudo tee % >/dev/null
@@ -120,6 +121,10 @@ map <leader>n :NERDTreeToggle<CR>
 
 map <leader>f :CtrlP<CR>
 map <leader>b :CtrlPBuffer<CR>
+
+" Tab navigation
+map <leader>h :tabprevious<CR>
+map <leader>l :tabnext<CR>
 
 " Makes CtrlP index faster in linux
 " ref: http://freehaha.blogspot.tw/2012/11/ctrlpvim.html
@@ -171,10 +176,6 @@ set title                     " show title in console title bar
 set wildmenu                  " Menu completion in command mode on <Tab>
 set wildmode=full             " <Tab> cycles between all matching choices.
 
-" don't bell or blink
-set noerrorbells
-set vb t_vb=
-
 " Ignore these files when completing
 set wildignore+=*.o,*.obj,.git,*.pyc
 set wildignore+=eggs/**
@@ -191,6 +192,10 @@ nnoremap <silent> N Nzz
 nnoremap <silent> * *zz
 nnoremap <silent> # #zz
 nnoremap <silent> g* g*zz
+
+" Easier moving of code blocks (better indentation)
+vnoremap < <gv
+vnoremap > >gv
 
 " Disable the colorcolumn when switching modes.  Make sure this is the
 " first autocmd for the filetype here
@@ -239,8 +244,9 @@ set modelines=5             " they must be within the first or last 5 lines.
 set ffs=unix,dos,mac        " Try recognizing dos, unix, and mac line endings.
 
 """" Messages, Info, Status
-set ls=2                    " allways show status line
+set ls=2                    " always show status line
 set vb t_vb=                " Disable all bells.  I hate ringing/flashing.
+set noerrorbells            " don't bell or blink
 set confirm                 " Y-N-C prompt if closing with unsaved changes.
 set showcmd                 " Show incomplete normal mode commands as I type.
 set report=0                " : commands always print changed line count.
@@ -279,11 +285,6 @@ highlight nonText ctermbg=NONE
 " Activate rope
 " Keys:
 " K             Show python docs
-" <Ctrl-Space>  Rope autocomplete
-" <Ctrl-c>g     Rope goto definition
-" <Ctrl-c>d     Rope show documentation
-" <Ctrl-c>f     Rope find occurrences
-" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
 " [[            Jump on previous class or function (normal, visual, operator modes)
 " ]]            Jump on next class or function (normal, visual, operator modes)
 " [M            Jump on previous class or method (normal, visual, operator modes)
@@ -299,7 +300,7 @@ let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
 
 " Drags down speed too much
-let g:pymode_folding = 0
+let g:pymode_folding = 1
 
 let g:pymode_syntax = 1
 
@@ -324,12 +325,11 @@ let g:pymode_breakpoint = 0
 " ==========================================================
 " YouCompleteMe Settings
 " ==========================================================
-inoremap <C-\> <C-X><C-O>
 " with YouCompleteMe, ctags is no longer needed: replace with YCM functions
 au FileType c,cpp,h,hpp nnoremap <C-]> :sp<CR>:YcmCompleter GoTo<CR>
 let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1 }
-" use acp
+" use python-mode
 let g:ycm_filetype_blacklist = { 'python': 1 }
 
 " Paste from clipboard
@@ -353,6 +353,20 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 au BufRead *.js set makeprg=jslint\ %
 
 let g:acp_completeoptPreview=1
+
+let g:jsx_ext_required = 0
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" npm install -g jsxhint
+let g:syntastic_javascript_checkers = ['jsxhint']
 
 " ===========================================================
 " FileType specific changes
