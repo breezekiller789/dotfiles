@@ -128,12 +128,13 @@ map <leader>l :tabnext<CR>
 
 " Makes CtrlP index faster in linux
 " ref: http://freehaha.blogspot.tw/2012/11/ctrlpvim.html
+" Ignores the files specified in .ctrlpignore
 let g:ctrlp_user_command = {
     \ 'types': {
-      \ 1: ['.git', 'cd %s && git ls-files -c -o --exclude-standard'],
-      \ 2: ['.hg', 'hg --cwd %s locate -I .'],
+    \ 1: ['.git', 'cd %s && git ls-files -c -o --exclude-standard | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp"'],
+    \ 2: ['.hg', 'hg --cwd %s locate -I . | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp)"'],
       \ },
-    \ 'fallback': 'find %s -type f'
+    \ 'fallback': 'find %s -type f | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp"'
     \ }
 
 " Ack searching
@@ -362,7 +363,8 @@ set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
+" Avoid slow open
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 " npm install -g jsxhint
