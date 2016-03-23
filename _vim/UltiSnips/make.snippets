@@ -1,0 +1,44 @@
+snippet makenew "Basic Makefile Settings" b
+# ------------------------------------------------------------------------------
+# Constant declartion
+# ------------------------------------------------------------------------------
+RE_Ax = [[:alpha:]]*
+RE_Dx = [[:digit:]]\+
+RE_D2 = [[:digit:]]\{2\}
+RE_D4 = [[:digit:]]\{4\}
+RE_AN = [[:alnum:]]\+
+
+# Supported version number
+#	3 digits: 3.1.2		3.1.2.rc1
+#	4 digits: 3.1.2.1	3.1.2.1.rc1
+
+RE_DATE    := $(RE_D4)$(RE_D2)$(RE_D2)
+RE_VERSION := $(RE_Dx)_$(RE_Dx)\(_$(RE_Dx)\)\{1,2\}$(RE_Ax)\(_$(RE_AN)\)*
+RE_SVN_TAG := \(release\|candidate\)-$(RE_DATE)-$(RE_VERSION)
+
+BASE_VERSION := 0.1.0
+REVISION := $(shell git rev-list HEAD | wc -l)
+TAG = $(shell git describe --tags --exact-match 2>/dev/null | sed -ne 's/^\($(RE_SVN_TAG)\)$$/\1/p')
+ifeq ($(TAG),)
+VERSION := $(BASE_VERSION).$(REVISION)
+else
+VERSION := $(shell echo '$(TAG)' | cut -d- -f3 | sed -e 's/_/./g')
+endif
+ARCH = $(shell arch)
+ifeq ($(ARCH),x86_64)
+ARCH = amd64
+endif
+ifeq ($(ARCH),i686)
+ARCH = i386
+endif
+DISTRI = $(shell lsb_release -s -i | tr A-Z a-z)
+RELEASE_DATE = $(shell echo '$(TAG)' | cut -d- -f2 | sed -e 's/_//g')
+
+PRODUCT = $1
+BUILD_DIR = ${2:build}
+RELEASE_DIR = ${3:release}
+endsnippet
+
+snippet $ "Variable" i
+$($1)$0
+endsnippet

@@ -296,9 +296,10 @@ highlight nonText ctermbg=NONE
 
 let g:pymode = 1
 let g:pymode_rope = 1
-let g:pymode_rope_completion = 1
+let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
+let g:pymode_rope_lookup_project = 0
 
 " Drags down speed too much
 let g:pymode_folding = 1
@@ -368,14 +369,18 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 " npm install -g jsxhint
-let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_checkers = ['eslint']
 
 " ===========================================================
 " FileType specific changes
 " ============================================================
 " Mako/HTML
 autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
-autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=4 tabstop=4 softtabstop=4
+autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+
+" xm/m
+autocmd BufNewFile,BufRead *.xm setlocal ft=objc
 
 " Python
 "au BufRead *.py compiler nose

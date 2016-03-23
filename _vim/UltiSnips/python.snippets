@@ -51,3 +51,29 @@ if func is None:
 print 'Shutting down Werkzeug server...'
 func()
 endsnippet
+
+snippet flask "flask template" b
+import json
+import os
+from flask import Flask, Response, request
+
+app = Flask(__name__, static_url_path='', static_folder='public')
+app.add_url_rule('/', 'root', lambda: app.send_static_file('index.html'))
+
+@app.route($1)
+def ${2:handler}():
+	$3
+
+	# if request.method == 'POST':
+	# 	# TODO
+	# if request.method == 'GET':
+	# 	# TODO
+
+    # return Response(
+	# 	json.dumps(data),
+	# 	mimetype='application/json',
+	# 	headers={'Cache-Control': 'no-cache'})
+
+if __name__ == '__main__':
+    app.run(port=int(os.environ.get("PORT", 8080)))
+endsnippet

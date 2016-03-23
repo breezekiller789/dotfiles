@@ -45,9 +45,10 @@ function install_if_needed {
 function install_prerequisites {
     install_if_needed ctags
     # needed by syntastic (ignore if you don't develop in jsx)
-    read -p "Do you need jsxhint? (yes or no) "
-    [[ $ans =~ [Yy].* ]] && (`which jsxhint` || npm install -g jsxhint || \
-        echo 'Install npm and run `npm install -g jsxhint` to enable jsxhint')
+    read -p "Do you need eslint? (yes or no) "
+    [[ $ans =~ [Yy].* ]] && (`which jsxhint` || 
+        npm install -g eslint babel-eslint eslint-plugin-react || \
+        echo 'Install npm and run `npm install -g eslint babel-eslint eslint-plugin-react` to enable eslint')
 }
 
 if [ "$1" = "vim" ]; then
