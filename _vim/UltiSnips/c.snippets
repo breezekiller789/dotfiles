@@ -1,0 +1,20 @@
+snippet #inc "#include syslib" b
+#include <$1>
+$0
+endsnippet
+
+snippet #incl "#include customlib" b
+#include "$1"
+$0
+endsnippet
+
+snippet #def "#define" b
+#define ${1:max(a, b)} ${2:((a) > (b) ? (a) : (b))}
+endsnippet
+
+snippet main "main" b
+int main(int argc, char *argv[]) {
+	$0
+	return 0;
+}
+endsnippet
