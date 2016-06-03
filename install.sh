@@ -57,7 +57,7 @@ function install_prerequisites {
         has ag || brew install the_silver_searcher
     elif [ "$OS" = "Ubuntu" ]; then
         sudo apt-get update
-        sudo apt-get install ctags silversearcher-ag
+        sudo apt-get install -yq --force-yes ctags silversearcher-ag
     else
         echo "*** Please install ctags, silversearcher by hand"
     fi

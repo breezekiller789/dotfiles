@@ -124,6 +124,11 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+# brew install bash-completion
+if [ -f $(brew --prefix 2>/dev/null)/etc/bash_completion ]; then
+    . $(brew --prefix)/etc/bash_completion
+fi
+
 export TERM=xterm-256color
 
 venwrap=`type -P virtualenvwrapper.sh`
@@ -146,7 +151,7 @@ export EDITOR="vim"
 export GIT_EDITOR="vim"
 
 # Add git branch names
-export PS1="$PS1\$(parse_git_branch) "
+export PS1="$PS1\$(parse_git_branch 2>/dev/null || echo -n '') "
 
 
 # /etc/profile.d/complete-hosts.sh
@@ -182,3 +187,11 @@ if hash docker-machine >/dev/null 2>&1 && test "`docker-machine status default`"
 fi
 
 stty -ixon
+
+if [ -d ~/.bash ]; then
+    if [ -d ~/.bash/functions ]; then
+        for f in ~/.bash/functions/*; do
+            source $f
+        done
+    fi
+fi
