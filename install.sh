@@ -6,10 +6,10 @@ usage() {
     exit 0
 }
 
-if [ -n `which apt-get 2>/dev/null` ]; then
-    INSTALL="sudo apt-get install"
-elif [ -n `which brew 2>/dev/null` ]; then
-    INSTALL="brew install"
+if uname -a | grep Darwin >/dev/null 2>&1; then
+    OS=Darwin
+elif uname -a | grep Ubuntu >/dev/null 2>&1; then
+    OS=Ubuntu
 fi
 
 function link_file {
@@ -35,20 +35,34 @@ function unlink_file {
     fi
 }
 
-function install_if_needed {
-    if [ -z `which $1` ]; then
-        echo "Installing $1 ... (might need your password)"
-        $INSTALL $1
-    fi
+has() {
+    hash $1 >/dev/null 2>&1
 }
 
 function install_prerequisites {
-    install_if_needed ctags
-    # needed by syntastic (ignore if you don't develop in jsx)
-    read -p "Do you need eslint? (yes or no) "
-    [[ $ans =~ [Yy].* ]] && (`which jsxhint` || 
-        npm install -g eslint babel-eslint eslint-plugin-react || \
-        echo 'Install npm and run `npm install -g eslint babel-eslint eslint-plugin-react` to enable eslint')
+    if [ "$OS" = "Darwin" ]; then
+        if ! `which brew`; then
+            echo '*** Error: I need homebrew to install dependencies'
+            echo '*** If you continue, some functions may not work properly'
+            read -p '> Continue anyway? (yes or no)'
+            [[ $ans =~ [Yy].* ]] || exit 1
+        fi
+        has ctags || brew install ctags
+        has ag || brew install the_silver_searcher
+    elif [ "$OS" = "Ubuntu" ]; then
+        sudo apt-get update
+        sudo apt-get install ctags silversearcher-ag
+    fi
+
+    # eslint for syntastic
+    if ! has npm ; then
+        echo 'If you need jsxhint, please install npm and run:'
+        echo '  npm install -g eslint babel-eslint eslint-plugin-react'
+    elif ! has jsxhint ; then
+        echo 'If you develop jsx, then eslint is needed by syntastic'
+        read -p "Do you need eslint? (yes or no) "
+        npm install -g eslint babel-eslint eslint-plugin-react
+    fi
 }
 
 if [ "$1" = "vim" ]; then
@@ -91,3 +105,7 @@ git submodule update --init --recursive
 if [ -z $no_update ]; then
     git submodule foreach --recursive git pull origin master
 fi
+
+# Prerequisites of YouCompleteMe
+# - cmake
+# - build-essential

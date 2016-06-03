@@ -126,19 +126,40 @@ map <leader>b :CtrlPBuffer<CR>
 map <leader>h :tabprevious<CR>
 map <leader>l :tabnext<CR>
 
-" Makes CtrlP index faster in linux
-" ref: http://freehaha.blogspot.tw/2012/11/ctrlpvim.html
-" Ignores the files specified in .ctrlpignore
-let g:ctrlp_user_command = {
-    \ 'types': {
-    \ 1: ['.git', 'cd %s && git ls-files -c -o --exclude-standard | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp"'],
-    \ 2: ['.hg', 'hg --cwd %s locate -I . | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp)"'],
-      \ },
-    \ 'fallback': 'find %s -type f | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp"'
-    \ }
+if executable('ag')
+    " https://robots.thoughtbot.com/faster-grepping-in-vim
+    " Use ag over grep
+    set grepprg=ag\ --nogroup\ --nocolor
 
-" Ack searching
-nmap <leader>a <Esc>:Ack!
+    " Use ag in CtrlP for listing files. Lightning fast and respects
+    " .gitignore
+    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+
+    " ag is fast enough that CtrlP doesn't need to cache
+    let g:ctrlp_use_caching = 0
+
+    " Ag searching
+    nmap <leader>a <Esc>:Ag!<SPACE>
+    set runtimepath^=~/.vim/bundle/ag
+
+    " bind \ to grep word under cursor
+    nnoremap \ :Ag! "\b<C-R><C-W>\b"<CR>:cw<CR>
+else
+    set grepprg=ack         " replace the default grep program with ack
+    " Makes CtrlP index faster in linux
+    " ref: http://freehaha.blogspot.tw/2012/11/ctrlpvim.html
+    " Ignores the files specified in .ctrlpignore
+    let g:ctrlp_user_command = {
+        \ 'types': {
+        \ 1: ['.git', 'cd %s && git ls-files -c -o --exclude-standard | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp"'],
+        \ 2: ['.hg', 'hg --cwd %s locate -I . | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp)"'],
+        \ },
+        \ 'fallback': 'find %s -type f | egrep -v "\.(png|jpg|jpeg|gif)$|node_modules|.*\.swp"'
+        \ }
+
+    " Ack searching
+    nmap <leader>a <Esc>:Ack!
+endif
 
 " Load the Gundo window
 map <leader>g :GundoToggle<CR>
@@ -181,8 +202,6 @@ set wildmode=full             " <Tab> cycles between all matching choices.
 set wildignore+=*.o,*.obj,.git,*.pyc
 set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
-
-set grepprg=ack         " replace the default grep program with ack
 
 " Set working directory
 nnoremap <leader>. :lcd %:p:h<CR>
@@ -333,6 +352,9 @@ let g:ycm_global_ycm_extra_conf = '~/.ycm_extra_conf.py'
 let g:ycm_filetype_whitelist = { 'cpp': 1, 'c': 1 }
 " use python-mode
 let g:ycm_filetype_blacklist = { 'python': 1 }
+
+" Copy to clipboard
+vnoremap <C-c> "*y
 
 " Paste from clipboard
 map <leader>p "+p

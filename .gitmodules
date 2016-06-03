@@ -88,3 +88,6 @@
 [submodule "_vim/bundle/vim-jsx"]
 	path = _vim/bundle/vim-jsx
 	url = https://github.com/mxw/vim-jsx
+[submodule "_vim/bundle/ag"]
+	path = _vim/bundle/ag
+	url = https://github.com/rking/ag.vim
