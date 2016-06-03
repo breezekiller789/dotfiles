@@ -1,0 +1,15 @@
+#!/bin/bash
+# No arguments: `git status`
+# With arguments: acts like git
+# https://github.com/colbycheeze/dotfiles/blob/master/zsh/functions/g
+
+g() {
+    if [ $# -gt 0 ]; then
+        git $@
+    else
+        git status
+    fi
+}
+
+# Complete g like git
+complete -p git | sed 's/ git$/ g/g' >/dev/null 2>&1
