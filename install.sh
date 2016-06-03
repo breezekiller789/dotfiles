@@ -6,11 +6,17 @@ usage() {
     exit 0
 }
 
-if uname -a | grep Darwin >/dev/null 2>&1; then
-    OS=Darwin
-elif uname -a | grep Ubuntu >/dev/null 2>&1; then
-    OS=Ubuntu
-fi
+case "$OSTYPE" in
+    darwin*)
+        OS=Darwin
+        ;;
+    linux*)
+        issue=`cat /etc/issue`
+        cat /etc/issue | grep Ubuntu && OS=Ubuntu
+        ;;
+    *)
+        ;;
+esac
 
 function link_file {
     source="${PWD}/$1"
@@ -52,6 +58,8 @@ function install_prerequisites {
     elif [ "$OS" = "Ubuntu" ]; then
         sudo apt-get update
         sudo apt-get install ctags silversearcher-ag
+    else
+        echo "*** Please install ctags, silversearcher by hand"
     fi
 
     # eslint for syntastic
