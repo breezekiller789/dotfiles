@@ -133,7 +133,7 @@ if executable('ag')
 
     " Use ag in CtrlP for listing files. Lightning fast and respects
     " .gitignore
-    let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+    let g:ctrlp_user_command = 'ag %s -l --nocolor --follow -g ""'
 
     " ag is fast enough that CtrlP doesn't need to cache
     let g:ctrlp_use_caching = 0
@@ -314,6 +314,7 @@ highlight nonText ctermbg=NONE
 " <leader>R     Rename a class/function/variable
 
 let g:pymode = 1
+let g:pymode_rope_lookup_project = 0
 let g:pymode_rope = 1
 let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
@@ -399,7 +400,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 " Mako/HTML
 autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
 autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType javascript.jsx setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " xm/m
 autocmd BufNewFile,BufRead *.xm setlocal ft=objc

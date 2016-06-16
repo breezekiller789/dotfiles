@@ -935,6 +935,25 @@ endsnippet
 # ---------------
 # -  Shortcuts  -
 # ---------------
+snippet ajax
+	$.ajax({
+		url: '${1:mydomain.com/url}',
+		type: '${2:POST}',
+		dataType: '${3:xml/html/script/json}',
+		contentType: '${4:application/json}',
+		data: JSON.stringify(${5:data}),
+		complete: function (jqXHR, textStatus) {
+			${6:// callback}
+		},
+		success: function (data, textStatus, jqXHR) {
+			${7:// success callback}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			${0:// error callback}
+		}
+	});
+endsnippet
+
 snippet reactnew "new react file" b
 var React = require('react');
 var ReactDOM = require('react-dom');
