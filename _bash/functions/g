@@ -5,7 +5,11 @@
 
 g() {
     if [ $# -gt 0 ]; then
-        git $@
+        cmd="git"
+        for arg in "$@"; do
+            cmd+=" '$arg'"
+        done
+        eval "$cmd"
     else
         git status
     fi
