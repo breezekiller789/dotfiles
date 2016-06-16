@@ -196,9 +196,3 @@ if [ -d ~/.bash ]; then
         done
     fi
 fi
-export NVM_DIR="/home/xecure/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
-
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-source /usr/local/bin/virtualenvwrapper.sh
