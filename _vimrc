@@ -314,6 +314,7 @@ highlight nonText ctermbg=NONE
 " <leader>R     Rename a class/function/variable
 
 let g:pymode = 1
+let g:pymode_rope_lookup_project = 0
 let g:pymode_rope = 1
 let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
@@ -399,7 +400,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 " Mako/HTML
 autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
 autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
-autocmd FileType javascript setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType javascript.jsx setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " xm/m
 autocmd BufNewFile,BufRead *.xm setlocal ft=objc
