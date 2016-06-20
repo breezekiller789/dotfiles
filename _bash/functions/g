@@ -7,9 +7,9 @@ g() {
     if [ $# -gt 0 ]; then
         cmd="git"
         for arg in "$@"; do
-            cmd+=" '$arg'"
+            cmd+=" \"${arg//\"/\\\"}\""
         done
-        eval "$cmd"
+        eval $cmd
     else
         git status
     fi
