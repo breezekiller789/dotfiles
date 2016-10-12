@@ -441,3 +441,10 @@ endif
 " NOTE: need to install [xpdf](http://www.foolabs.com/xpdf/download.html)
 :command! -complete=file -nargs=1 Rpdfraw :tabe|r !pdftotext -nopgbrk <q-args> -
 :command! -complete=file -nargs=1 Rpdf :tabe|r !pdftotext -nopgbrk <q-args> - |fmt -sw78
+
+" Fix docker container mount volume problem
+" https://forums.docker.com/t/modify-a-file-which-mount-as-a-data-volume-but-it-didnt-change-in-container/2813/10
+set backupcopy=yes
+
+" Enable syntax-aware folding in json files
+autocmd BufNewFile,BufRead *.json setlocal foldmethod=syntax
