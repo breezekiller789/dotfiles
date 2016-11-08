@@ -183,10 +183,6 @@ fi
 # Honor Homebrew installations
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH
 
-if hash docker-machine >/dev/null 2>&1 && test "`docker-machine status default`" = "Running"; then
-    eval "$(docker-machine env default)"
-fi
-
 stty -ixon
 
 if [ -d ~/.bash ]; then
