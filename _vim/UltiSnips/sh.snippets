@@ -3,6 +3,37 @@ snippet #! "Shebang header for shell scripts" b
 $0
 endsnippet
 
+snippet colors "Terminal colors" b
+red='\033[91m'
+green='\033[92m'
+blue='\033[94m'
+yellow='\033[93m'
+white='\033[0m'
+$0
+endsnippet
+
+snippet logging "Logging utils" b
+say() {
+    if [ "$(ps -p $$ -ocomm=)" = "bash" ]; then
+        echo -e "\$1"
+    else
+        echo "\$1"
+    fi
+}
+
+info() {
+    say "${blue}[+]${white} \$1"
+}
+
+warn() {
+    say "${yellow}[+]${white} \$1"
+}
+
+error() {
+    say "${red}[-]${white} \$1"
+}
+endsnippet
+
 snippet for "for loop" b
 for $1 in $2; do
 	$3
