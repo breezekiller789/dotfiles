@@ -82,7 +82,15 @@ function unlink_file {
 }
 
 has() {
-    hash $1 >/dev/null 2>&1
+    hash $1 >/dev/null 2>&1 && return 0
+    if [ "$OS" = "Darwin" ]; then
+        brew ls --versions $1 >/dev/null 2>&1 && return 0
+    elif [ "$OS" = "Ubuntu" ]; then
+        if dpkg -s $1 2>/dev/null | grep '^Status' | grep installed; then
+            return 0
+        fi
+    fi
+    return 1
 }
 
 function install_prerequisites {
@@ -116,14 +124,6 @@ function install_prerequisites {
         warn 'Please install ctags, silversearcher by hand'
     fi
 
-    if [ $opt_with_ycm -eq 1 ]; then
-        install_ycm || error "Failed to install YCM"
-    fi
-
-    if [ $opt_with_jsxhint -eq 1 ]; then
-        install_jsxhint
-    fi
-
 }
 
 install_jsxhint() {
@@ -143,8 +143,9 @@ install_jsxhint() {
 install_ycm() {
     pushd _vim/bundle/YouCompleteMe
     info "Installing dependencies for YCM..."
-    for x in cmake clang; do
+    for x in cmake clang xz python-config; do
         if ! has $x; then
+            info "Installing $x..."
             if [ "$OS" = "Darwin" ]; then
                 brew install $x
             elif [ "$OS" = "Ubuntu" ]; then
@@ -155,6 +156,8 @@ install_ycm() {
             fi
         fi
     done
+
+    info "Installing YCM..."
     ./install.py --clang-completer
     popd
 }
@@ -197,8 +200,6 @@ main() {
         shift
     done
 
-    return 0
-
     case $target in
         vim)
             info "Installing vim settings..."
@@ -227,11 +228,12 @@ main() {
     esac
 
     if [ $opt_with_ycm -eq 1 ]; then
-        git submodule add https://github.com/Valloric/YouCompleteMe.git _vim/bundle/YouCompleteMe
-    fi
-
-    if [ $opt_with_jsxhint -eq 1 ]; then
-        install_jsxhint
+        info 'Including YCM submodule...'
+        git submodule add https://github.com/Valloric/YouCompleteMe.git _vim/bundle/YouCompleteMe >/dev/null 2>&1 || true
+    else
+        info 'Excluding YCM submodule...'
+        git submodule deinit _vim/bundle/YouCompleteMe >/dev/null 2>&1 || true
+        git rm -r _vim/bundle/YouCompleteMe >/dev/null 2>&1 || true
     fi
 
     submodules=`git submodule | awk '{print $2}'`
@@ -245,7 +247,11 @@ main() {
     git submodule update --init --recursive
 
     if [ $opt_with_ycm -eq 1 ]; then
-        install_ycm
+        install_ycm || error "Failed to install YCM"
+    fi
+
+    if [ $opt_with_jsxhint -eq 1 ]; then
+        install_jsxhint
     fi
 
     if [ $opt_update -eq 1 ]; then
