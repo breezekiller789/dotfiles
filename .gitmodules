@@ -91,3 +91,6 @@
 [submodule "_vim/bundle/ag"]
 	path = _vim/bundle/ag
 	url = https://github.com/rking/ag.vim
+[submodule "_vim/bundle/vim-json"]
+	path = _vim/bundle/vim-json
+	url = https://github.com/Happyholic1203/vim-json

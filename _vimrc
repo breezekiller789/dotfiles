@@ -444,3 +444,9 @@ endif
 
 set fileencodings=utf-8,big5
 set fileencoding=utf8
+" Fix docker container mount volume problem
+" https://forums.docker.com/t/modify-a-file-which-mount-as-a-data-volume-but-it-didnt-change-in-container/2813/10
+set backupcopy=yes
+
+" Enable syntax-aware folding in json files
+autocmd BufNewFile,BufRead *.json setlocal foldmethod=syntax
