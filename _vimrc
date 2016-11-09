@@ -441,3 +441,6 @@ endif
 " NOTE: need to install [xpdf](http://www.foolabs.com/xpdf/download.html)
 :command! -complete=file -nargs=1 Rpdfraw :tabe|r !pdftotext -nopgbrk <q-args> -
 :command! -complete=file -nargs=1 Rpdf :tabe|r !pdftotext -nopgbrk <q-args> - |fmt -sw78
+
+set fileencodings=utf-8,big5
+set fileencoding=utf8
