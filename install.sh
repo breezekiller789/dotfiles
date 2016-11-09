@@ -142,8 +142,8 @@ install_jsxhint() {
 
 install_ycm() {
     pushd _vim/bundle/YouCompleteMe
-    info "Installing dependencies for YCM... (Assuming python-dev is installed)"
-    for x in cmake clang xz; do
+    info "Installing dependencies for YCM... (Assuming python-dev, xz-utils are installed)"
+    for x in cmake clang; do
         if ! has $x; then
             info "Installing $x..."
             if [ "$OS" = "Darwin" ]; then
