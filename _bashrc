@@ -192,3 +192,7 @@ if [ -d ~/.bash ]; then
         done
     fi
 fi
+
+if [ -f ~/.docker_completion.sh ]; then
+    . ~/.docker_completion.sh
+fi
