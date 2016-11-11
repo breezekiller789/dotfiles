@@ -450,3 +450,8 @@ set backupcopy=yes
 
 " Enable syntax-aware folding in json files
 autocmd BufNewFile,BufRead *.json setlocal foldmethod=syntax
+
+command MMan3 execute "silent !man 3 <cword>"
+autocmd BufNewFile,BufRead *.c,*.cpp,*.cc,*.h,*.hpp nnoremap <silent><buffer>K :MMan3<CR>:redraw!<CR>
+
+nnoremap <leader>p :!which ipython && ipython \|\| python<CR><CR>:redraw!<CR>
