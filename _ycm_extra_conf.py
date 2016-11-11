@@ -82,6 +82,7 @@ flags = [
 './tests/gmock',
 '-isystem',
 './tests/gmock/include',
+'-I/usr/include',
 Popen(['python-config', '--include'], stdout=PIPE).communicate()[0] or '',
 ]
 
