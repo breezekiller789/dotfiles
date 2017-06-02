@@ -196,3 +196,7 @@ fi
 if [ -f ~/.docker_completion.sh ]; then
     . ~/.docker_completion.sh
 fi
+
+if [ -f ~/.bashrc_custom ]; then
+    . ~/.bashrc_custom
+fi

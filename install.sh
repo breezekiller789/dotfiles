@@ -95,7 +95,7 @@ has() {
 
 function install_prerequisites {
     if [ "$OS" = "Darwin" ]; then
-        if ! `which brew`; then
+        if ! which brew; then
             error 'I need homebrew to install dependencies'
             error 'If you continue, some functions may not work properly'
             while true; do

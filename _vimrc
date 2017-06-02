@@ -71,6 +71,11 @@ map <leader>s :sp<CR>
 " <C-O> is used by tmux
 inoremap <C-\> <C-X><C-O>
 
+" Go to last active tab
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+vnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+
 "<CR><C-w>l<C-f>:set scrollbind<CR>
 
 " sudo write this
@@ -452,6 +457,10 @@ set backupcopy=yes
 
 " Enable syntax-aware folding in json files
 autocmd BufNewFile,BufRead *.json setlocal foldmethod=syntax
+
+" Enable syntax highlight for thrift files
+au BufRead,BufNewFile *.thrift set filetype=thrift
+au! Syntax thrift source ~/.vim/plugin/thrift.vim
 
 command MMan3 execute "silent !man 3 <cword>"
 autocmd BufNewFile,BufRead *.c,*.cpp,*.cc,*.h,*.hpp nnoremap <silent><buffer>K :MMan3<CR>:redraw!<CR>
