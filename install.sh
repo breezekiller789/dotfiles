@@ -164,14 +164,15 @@ install_ycm() {
 }
 
 install_ranger() {
-    pushd /tmp
+    d=`mktemp -d`
+    pushd $d
     wget http://nongnu.org/ranger/ranger-stable.tar.gz
     tar xvf ranger-stable.tar.gz
     pushd ranger-*
     make install
     popd
-    rm -rf ranger-*
     popd
+    rm -rf $d
 }
 
 main() {
