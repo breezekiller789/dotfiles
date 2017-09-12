@@ -9,6 +9,7 @@ Options:
     --with-ycm: install with YCM support
     --update: update submodules to latest versions
     --with-jsxhint: install with jsxhint support
+    --with-ranger: install with ranger support
 EOF
     exit 0
 }
@@ -162,12 +163,24 @@ install_ycm() {
     popd
 }
 
+install_ranger() {
+    pushd /tmp
+    wget http://nongnu.org/ranger/ranger-stable.tar.gz
+    tar xvf ranger-stable.tar.gz
+    pushd ranger-*
+    make install
+    popd
+    rm -rf ranger-*
+    popd
+}
+
 main() {
     OS=`get_unified_os_name`
 
     opt_with_ycm=0
     opt_update=0
     opt_with_jsxhint=0
+    opt_with_ranger=0
 
     target=all
 
@@ -184,6 +197,9 @@ main() {
                 ;;
             --with-jsxhint)
                 opt_with_jsxhint=1
+                ;;
+            --with-ranger)
+                opt_with_ranger=1
                 ;;
             -h|--help)
                 usage
@@ -252,6 +268,10 @@ main() {
 
     if [ $opt_with_jsxhint -eq 1 ]; then
         install_jsxhint
+    fi
+
+    if [ $opt_with_ranger -eq 1 ]; then
+        install_ranger
     fi
 
     if [ $opt_update -eq 1 ]; then
