@@ -209,7 +209,7 @@ set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
 " Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+nnoremap <leader>. :NERDTreeFind<CR>
 
 " Keep search pattern at the center of the screen
 nnoremap <silent> n nzz
