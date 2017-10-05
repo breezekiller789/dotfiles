@@ -507,3 +507,8 @@ function! RangeChooser()
 endfunction
 command! -bar RangerChooser call RangeChooser()
 nnoremap <leader>r :<C-U>RangerChooser<CR>
+
+" Go to last active tab
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+vnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
