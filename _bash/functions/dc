@@ -1,0 +1,21 @@
+#!/bin/bash
+# No arguments: `docker-compose ps`
+# With arguments: acts like docker-compose
+
+# Install docker-compose completion: curl curl -L https://raw.githubusercontent.com/docker/compose/1.16.1/contrib/completion/bash/docker-compose > $(brew --prefix)/etc/bash_completion.d/docker-compose
+
+dc() {
+    if [ $# -gt 0 ]; then
+        cmd="docker-compose"
+        for arg in "$@"; do
+            cmd+=" \"${arg//\"/\\\"}\""
+        done
+        eval $cmd
+    else
+        docker-compose ps
+    fi
+}
+
+# Complete dc like docker-compose
+_completion_loader docker-compose 2>/dev/null
+eval $(complete -p docker-compose | sed 's/ docker-compose$/ dc/g')

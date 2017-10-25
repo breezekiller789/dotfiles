@@ -1,0 +1,21 @@
+#!/bin/bash
+# No arguments: `docker ps`
+# With arguments: acts like docker
+
+# Install docker completion: curl -XGET https://raw.githubusercontent.com/docker/cli/master/contrib/completion/bash/docker > $(brew --prefix)/etc/bash_completion.d/docker
+
+d() {
+    if [ $# -gt 0 ]; then
+        cmd="docker"
+        for arg in "$@"; do
+            cmd+=" \"${arg//\"/\\\"}\""
+        done
+        eval $cmd
+    else
+        docker ps
+    fi
+}
+
+# Complete d like docker
+_completion_loader docker 2>/dev/null
+eval $(complete -p docker | sed 's/ docker$/ d/g')
