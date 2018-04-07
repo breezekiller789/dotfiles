@@ -85,6 +85,11 @@ map <leader>td <Plug>TaskList
 " Run pep8
 let g:pep8_map='<leader>8'
 
+" Go to the last active tab
+let g:lasttab = 1
+nmap <leader>; :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
+
 " run py.test's
 nmap <silent><Leader>tf <Esc>:Pytest file<CR>
 nmap <silent><Leader>tc <Esc>:Pytest class<CR>
@@ -314,7 +319,6 @@ highlight nonText ctermbg=NONE
 " <leader>R     Rename a class/function/variable
 
 let g:pymode = 1
-let g:pymode_rope_lookup_project = 0
 let g:pymode_rope = 1
 let g:pymode_rope_completion = 0
 let g:pymode_rope_completion_on_dot = 0
@@ -400,6 +404,7 @@ let g:syntastic_javascript_checkers = ['eslint']
 " FileType specific changes
 " ============================================================
 " Mako/HTML
+autocmd BufNewFile,BufRead *.html set filetype=htmldjango
 autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
 autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript.jsx setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
@@ -453,7 +458,11 @@ set backupcopy=yes
 " Enable syntax-aware folding in json files
 autocmd BufNewFile,BufRead *.json setlocal foldmethod=syntax
 
-command MMan3 execute "silent !man 3 <cword>"
+command! MMan3 execute "silent !man 3 <cword>"
 autocmd BufNewFile,BufRead *.c,*.cpp,*.cc,*.h,*.hpp nnoremap <silent><buffer>K :MMan3<CR>:redraw!<CR>
 
 nnoremap <leader>p :!which ipython && ipython \|\| python<CR><CR>:redraw!<CR>
+
+" disable fmt on save
+let g:go_fmt_autosave = 0
+autocmd BufNewFile,BufRead *.go nnoremap <leader>r :GoRun<CR>
