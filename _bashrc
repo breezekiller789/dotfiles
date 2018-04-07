@@ -130,6 +130,10 @@ if hash brew 2>/dev/null && \
     . $(brew --prefix)/etc/bash_completion
 fi
 
+if hash pipenv >/dev/null 2>&1; then
+    eval "$(pipenv --completion)"
+fi
+
 export TERM=xterm-256color
 
 venwrap=`type -P virtualenvwrapper.sh`
