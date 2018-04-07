@@ -71,6 +71,11 @@ map <leader>s :sp<CR>
 " <C-O> is used by tmux
 inoremap <C-\> <C-X><C-O>
 
+" Go to last active tab
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+vnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+
 "<CR><C-w>l<C-f>:set scrollbind<CR>
 
 " sudo write this
@@ -209,7 +214,7 @@ set wildignore+=eggs/**
 set wildignore+=*.egg-info/**
 
 " Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
+nnoremap <leader>. :NERDTreeFind<CR>
 
 " Keep search pattern at the center of the screen
 nnoremap <silent> n nzz
@@ -458,11 +463,58 @@ set backupcopy=yes
 " Enable syntax-aware folding in json files
 autocmd BufNewFile,BufRead *.json setlocal foldmethod=syntax
 
-command! MMan3 execute "silent !man 3 <cword>"
+" Enable syntax highlight for thrift files
+au BufRead,BufNewFile *.thrift set filetype=thrift
+au! Syntax thrift source ~/.vim/plugin/thrift.vim
 autocmd BufNewFile,BufRead *.c,*.cpp,*.cc,*.h,*.hpp nnoremap <silent><buffer>K :MMan3<CR>:redraw!<CR>
 
 nnoremap <leader>p :!which ipython && ipython \|\| python<CR><CR>:redraw!<CR>
 
+" Compatible with ranger 1.4.2 through 1.7.*
+"
+" Add ranger as a file chooser in vim
+"
+" If you add this code to the .vimrc, ranger can be started using the command
+" ":RangerChooser" or the keybinding "<leader>r".  Once you select one or more
+" files, press enter and ranger will quit again and vim will open the selected
+" files.
+
+function! RangeChooser()
+    let temp = tempname()
+    " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
+    " with ranger 1.4.2 through 1.5.0 instead.
+    "exec 'silent !ranger --choosefile=' . shellescape(temp)
+    if has("gui_running")
+        exec 'silent !xterm -e ranger --choosefiles=' . shellescape(temp)
+    else
+        exec 'silent !ranger --choosefiles=' . shellescape(temp)
+    endif
+    if !filereadable(temp)
+        redraw!
+        " Nothing to read.
+        return
+    endif
+    let names = readfile(temp)
+    if empty(names)
+        redraw!
+        " Nothing to open.
+        return
+    endif
+    " Edit the first item.
+    exec 'edit ' . fnameescape(names[0])
+    " Add any remaning items to the arg list/buffer list.
+    for name in names[1:]
+        exec 'argadd ' . fnameescape(name)
+    endfor
+    redraw!
+endfunction
+command! -bar RangerChooser call RangeChooser()
+nnoremap <leader>r :<C-U>RangerChooser<CR>
+
+" Go to last active tab
+au TabLeave * let g:lasttab = tabpagenr()
+nnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+vnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
 " disable fmt on save
 let g:go_fmt_autosave = 0
 autocmd BufNewFile,BufRead *.go nnoremap <leader>r :GoRun<CR>

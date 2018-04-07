@@ -9,6 +9,7 @@ Options:
     --with-ycm: install with YCM support
     --update: update submodules to latest versions
     --with-jsxhint: install with jsxhint support
+    --with-ranger: install with ranger support
 EOF
     exit 0
 }
@@ -95,7 +96,7 @@ has() {
 
 function install_prerequisites {
     if [ "$OS" = "Darwin" ]; then
-        if ! `which brew`; then
+        if ! which brew; then
             error 'I need homebrew to install dependencies'
             error 'If you continue, some functions may not work properly'
             while true; do
@@ -159,7 +160,20 @@ install_ycm() {
 
     info "Installing YCM..."
     ./install.py --clang-completer
+    rm -f ~/dotfiles/_vim/bundle/YouCompleteMe/third_party/ycmd/clang_archives/clang*
     popd
+}
+
+install_ranger() {
+    d=`mktemp -d`
+    pushd $d
+    wget http://nongnu.org/ranger/ranger-stable.tar.gz
+    tar xvf ranger-stable.tar.gz
+    pushd ranger-*
+    make install
+    popd
+    popd
+    rm -rf $d
 }
 
 main() {
@@ -168,6 +182,7 @@ main() {
     opt_with_ycm=0
     opt_update=0
     opt_with_jsxhint=0
+    opt_with_ranger=0
 
     target=all
 
@@ -184,6 +199,9 @@ main() {
                 ;;
             --with-jsxhint)
                 opt_with_jsxhint=1
+                ;;
+            --with-ranger)
+                opt_with_ranger=1
                 ;;
             -h|--help)
                 usage
@@ -252,6 +270,10 @@ main() {
 
     if [ $opt_with_jsxhint -eq 1 ]; then
         install_jsxhint
+    fi
+
+    if [ $opt_with_ranger -eq 1 ]; then
+        install_ranger
     fi
 
     if [ $opt_update -eq 1 ]; then
