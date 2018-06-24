@@ -327,7 +327,7 @@ let g:pymode_rope_autoimport = 0
 let g:pymode_rope_lookup_project = 0
 
 " Drags down speed too much
-let g:pymode_folding = 1
+let g:pymode_folding = 0
 
 let g:pymode_syntax = 1
 
@@ -344,7 +344,7 @@ let g:pymode_debug = 0
 let g:pymode_lint = 1
 let g:pymode_lint_on_fly = 0
 let g:pymode_lint_on_write = 1
-let g:pymode_lint_checkers = ["pyflakes", "pep8" ,"pylint"]
+let g:pymode_lint_checkers = ["pyflakes", "pep8", "pylint"]
 let g:pymode_lint_ignore = 'C0111,F0401,W0703,W1201'
 
 let g:pymode_breakpoint = 0
@@ -400,6 +400,8 @@ let g:syntastic_check_on_wq = 0
 
 " npm install -g jsxhint
 let g:syntastic_javascript_checkers = ['eslint']
+
+let g:syntastic_go_checkers = ['go', 'golint', 'govet']
 
 " ===========================================================
 " FileType specific changes
@@ -512,3 +514,8 @@ nnoremap <leader>r :<C-U>RangerChooser<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 nnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
 vnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
+
+" We can easily indent by ourselves: ctrl-d, ctrl-t in insert mode
+" set indentexpr=
+
+let NERDTreeIgnore = ['\.pyc$', '\.egg-info$', '__pycache__']
