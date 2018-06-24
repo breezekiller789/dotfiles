@@ -86,6 +86,14 @@ flags = [
 Popen(['python-config', '--include'], stdout=PIPE).communicate()[0] or '',
 ]
 
+local_conf_file = os.path.expanduser('~/.ycm_local_conf.py')
+if os.path.exists(local_conf_file):
+    import imp
+    with open(local_conf_file, 'rb') as fp:
+        _local_conf = imp.load_module(
+            '_local_conf', fp, local_conf_file, ('.py', 'rb', imp.PY_SOURCE))
+    flags += _local_conf.flags
+
 
 # Set this to the absolute path to the folder (NOT the file!) containing the
 # compile_commands.json file to use that instead of 'flags'. See here for

@@ -160,7 +160,7 @@ install_ycm() {
 
     info "Installing YCM..."
     ./install.py --clang-completer
-    rm -f ~/dotfiles/_vim/bundle/YouCompleteMe/third_party/ycmd/clang_archives/clang*
+    rm -f ./third_party/ycmd/clang_archives/clang*
     popd
 }
 
