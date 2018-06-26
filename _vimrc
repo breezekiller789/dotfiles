@@ -405,8 +405,6 @@ let g:syntastic_check_on_wq = 0
 " npm install -g jsxhint
 let g:syntastic_javascript_checkers = ['eslint']
 
-let g:syntastic_go_checkers = ['go', 'golint', 'govet']
-
 " ===========================================================
 " FileType specific changes
 " ============================================================
@@ -522,6 +520,25 @@ vnoremap <silent> <leader>; :exe "tabn ".g:lasttab<CR>
 " set indentexpr=
 
 let NERDTreeIgnore = ['\.pyc$', '\.egg-info$', '__pycache__']
-" disable fmt on save
-" let g:go_fmt_autosave = 0
+
+""""""""""""
+"  Golang  "
+""""""""""""
+
 autocmd BufNewFile,BufRead *.go nnoremap <leader>r :GoRun<CR>
+autocmd BufNewFile,BufRead *.go nnoremap <leader>t :GoTest<CR>
+autocmd FileType go nmap <leader>i <Plug>(go-info)
+let g:go_highlight_types = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+" let g:go_def_mode = 'godef'
+" let g:rehash256 = 1
+" let g:molokai_original = 1
+" colorscheme molokai
