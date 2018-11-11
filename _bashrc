@@ -130,18 +130,13 @@ if hash brew 2>/dev/null && \
     . $(brew --prefix)/etc/bash_completion
 fi
 
-if hash pipenv >/dev/null 2>&1; then
-    eval "$(pipenv --completion)"
-fi
-
 export TERM=xterm-256color
 
-venwrap=`type -P virtualenvwrapper.sh`
-if [ "$venwrap" != "" ]; then
-    export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python
-    export VIRTUALENVWRAPPER_VIRTUALENV=/usr/local/bin/virtualenv
-    export VIRTUALENVWRAPPER_VIRTUALENV_ARGS='--no-site-packages'
-    source $venwrap
+venvwrapper_lazy=$(type -P virtualenvwrapper_lazy.sh)
+if [ -n "$venvwrapper_lazy" ]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    export VIRTUALENVWRAPPER_SCRIPT="$(type -P virtualenvwrapper.sh)"
+    source "$venvwrapper_lazy"
 fi
 
 # PYTHONSTARTUP=~/.pythonrc.py
