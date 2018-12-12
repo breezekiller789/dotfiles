@@ -77,3 +77,29 @@ def ${2:handler}():
 if __name__ == '__main__':
     app.run(port=int(os.environ.get("PORT", 8080)))
 endsnippet
+
+snippet r "recvuntil" b
+r.recvuntil($1)$0
+endsnippet
+
+snippet s "sendline" b
+r.sendline($1)$0
+endsnippet
+
+snippet inter "interactive" b
+r.interactive()$0
+endsnippet
+
+snippet i "raw_input" b
+raw_input($1)$0
+endsnippet
+
+snippet pwn "from pwn import *" b
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+from pwn import *
+
+r = process('./$1')
+
+$0
+endsnippet
