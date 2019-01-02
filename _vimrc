@@ -69,7 +69,7 @@ command! W :w
 map <leader>s :sp<CR>
 
 " <C-O> is used by tmux
-inoremap <C-\> <C-X><C-O>
+inoremap <C-@> <C-X><C-O>
 
 " Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
@@ -325,7 +325,8 @@ highlight nonText ctermbg=NONE
 
 let g:pymode = 1
 let g:pymode_rope = 1
-let g:pymode_rope_completion = 0
+let g:pymode_rope_completion = 1
+let g:pymode_rope_completion_bind = '<C-Space>'
 let g:pymode_rope_completion_on_dot = 0
 let g:pymode_rope_autoimport = 0
 let g:pymode_rope_lookup_project = 0
@@ -413,6 +414,7 @@ autocmd BufNewFile,BufRead *.html set filetype=htmldjango
 autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2 setlocal ft=html
 autocmd FileType html,xhtml,xml,css setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 autocmd FileType javascript.jsx setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
+autocmd FileType yaml,yml setlocal expandtab shiftwidth=2 tabstop=2 softtabstop=2
 
 " xm/m
 autocmd BufNewFile,BufRead *.xm setlocal ft=objc
