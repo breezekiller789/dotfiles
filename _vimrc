@@ -327,7 +327,7 @@ let g:pymode = 1
 let g:pymode_rope = 1
 let g:pymode_rope_completion = 1
 let g:pymode_rope_completion_bind = '<C-Space>'
-let g:pymode_rope_completion_on_dot = 0
+let g:pymode_rope_complete_on_dot = 0
 let g:pymode_rope_autoimport = 0
 let g:pymode_rope_lookup_project = 0
 
