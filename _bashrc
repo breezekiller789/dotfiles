@@ -213,4 +213,8 @@ if [ -f ~/.fzf.bash ]; then
         export FZF_DEFAULT_OPTS="--ansi"
         export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
     fi
+
+    # macOS: opt-C is ç
+    bind '"ç": "\C-x\C-addi`__fzf_cd__`\C-x\C-e\C-x\C-r\C-m"'
+    bind -m vi-command '"\ec": "ddi`__fzf_cd__`\C-x\C-e\C-x\C-r\C-m"'
 fi
