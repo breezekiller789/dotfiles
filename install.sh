@@ -47,8 +47,10 @@ get_unified_os_name() {
             ;;
         linux*)
             issue=`cat /etc/issue`
-            if cat /etc/issue | grep Ubuntu >/dev/null 2>&1; then
+            if cat /etc/issue | grep -i ubuntu >/dev/null 2>&1; then
                 echo Ubuntu
+            elif cat /etc/issue | grep -i debian >/dev/null 2>&1; then
+                echo Debian
             fi
             ;;
         *)
@@ -118,13 +120,29 @@ function install_prerequisites {
         fi
         has ctags || brew install ctags
         has ag || brew install the_silver_searcher
+        has fd || brew install fd
     elif [ "$OS" = "Ubuntu" ]; then
         sudo apt-get update
         sudo apt-get install -yq --force-yes ctags silversearcher-ag
+
+        # install fd
+        tmp=$(mktemp -d)
+        deb=$(curl -s https://api.github.com/repos/sharkdp/fd/releases/latest\
+            |grep -o "browser_download_url.*fd_.*_amd64.deb"|\
+            grep -o 'https://.*_amd64.deb')
+        wget "$deb" -P "$tmp"
+        sudo dpkg -i "$deb"
+        rm -rf $tmp
+    elif [ "$OS" = "Debian" ]; then
+        sudo apt-get update
+        sudo apt-get install -yq --force-yes ctags silversearcher-ag
+        sudo apt-get install -yq fd-find
     else
         warn 'Please install ctags, silversearcher by hand'
     fi
 
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    ~/.fzf/install --all
 }
 
 install_jsxhint() {

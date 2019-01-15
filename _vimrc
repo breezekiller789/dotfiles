@@ -129,7 +129,12 @@ map <c-h> <c-w>h
 " Open NerdTree
 map <leader>n :NERDTreeToggle<CR>
 
-map <leader>f :CtrlP<CR>
+if executable('fzf')
+    set rtp+=~/.fzf
+    map <leader>f :FZF<CR>
+else
+    map <leader>f :CtrlP<CR>
+endif
 map <leader>b :CtrlPBuffer<CR>
 
 " Tab navigation
