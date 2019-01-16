@@ -121,22 +121,22 @@ function install_prerequisites {
         has ctags || brew install ctags
         has ag || brew install the_silver_searcher
         has fd || brew install fd
-    elif [ "$OS" = "Ubuntu" ]; then
+        has rg || brew install ripgrep
+    elif [ "$OS" = "Ubuntu" -o "$OS" = "Debian" ]; then
         sudo apt-get update
         sudo apt-get install -yq --force-yes ctags silversearcher-ag
 
-        # install fd
+        # install fd & rg
         tmp=$(mktemp -d)
-        deb=$(curl -s https://api.github.com/repos/sharkdp/fd/releases/latest\
-            |grep -o "browser_download_url.*fd_.*_amd64.deb"|\
-            grep -o 'https://.*_amd64.deb')
-        wget "$deb" -P "$tmp"
-        sudo dpkg -i "$deb"
+        for repo in BurntSushi/ripgrep sharkdp/fd; do
+            name=$(basename $repo)
+            url=$(curl -s https://api.github.com/repos/$repo/releases/latest|\
+                grep -o "browser_download_url.*${name}_.*_amd64.deb"|\
+                grep -o 'https://.*_amd64.deb')
+            wget -P "$tmp" "$url"
+        done
+        sudo dpkg -i $tmp/*.deb
         rm -rf $tmp
-    elif [ "$OS" = "Debian" ]; then
-        sudo apt-get update
-        sudo apt-get install -yq --force-yes ctags silversearcher-ag
-        sudo apt-get install -yq fd-find
     else
         warn 'Please install ctags, silversearcher by hand'
     fi
