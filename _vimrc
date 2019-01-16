@@ -64,10 +64,6 @@ command! W :w
 "     :set scrollbind
 " endfu
 
-" nmap <leader>sb :call SplitScroll()<CR>
-
-map <leader>s :sp<CR>
-
 " <C-O> is used by tmux
 inoremap <C-@> <C-X><C-O>
 
@@ -141,7 +137,20 @@ map <leader>b :CtrlPBuffer<CR>
 map <leader>h :tabprevious<CR>
 map <leader>l :tabnext<CR>
 
-if executable('ag')
+if executable('rg')
+    set grepprg=rg\ --vimgrep\ --no-follow
+    nmap <leader>g <Esc>:Lines<Cr>
+    command! -bang -nargs=* Rg
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --ignore-case '.shellescape(<q-args>), 1,
+      \   <bang>0 ? fzf#vim#with_preview('up:60%')
+      \           : fzf#vim#with_preview('right:50%:hidden', '?'),
+      \   <bang>0)
+    nmap <leader>s <Esc>:Rg<Cr>
+
+    " bind \ to grep word under cursor
+    nnoremap \ :Rg <C-R><C-W><CR>
+elseif executable('ag')
     " https://robots.thoughtbot.com/faster-grepping-in-vim
     " Use ag over grep
     set grepprg=ag\ --nogroup\ --nocolor
@@ -154,7 +163,7 @@ if executable('ag')
     let g:ctrlp_use_caching = 0
 
     " Ag searching
-    nmap <leader>a <Esc>:Ag!<SPACE>
+    nmap <leader>s <Esc>:Ag!<SPACE>
     set runtimepath^=~/.vim/bundle/ag
 
     " bind \ to grep word under cursor
@@ -173,11 +182,8 @@ else
         \ }
 
     " Ack searching
-    nmap <leader>a <Esc>:Ack!
+    nmap <leader>s <Esc>:Ack!
 endif
-
-" Load the Gundo window
-map <leader>g :GundoToggle<CR>
 
 " ==========================================================
 " Pathogen - Allows us to organize our vim plugins
