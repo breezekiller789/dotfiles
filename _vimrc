@@ -65,7 +65,7 @@ command! W :w
 " endfu
 
 " <C-O> is used by tmux
-inoremap <C-@> <C-X><C-O>
+inoremap <C-\> <C-X><C-O>
 
 " Go to last active tab
 au TabLeave * let g:lasttab = tabpagenr()
