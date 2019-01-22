@@ -273,7 +273,6 @@ set foldlevel=99            " don't fold by default
 inoremap # #
 
 " close preview window automatically when we move around
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 """" Reading/Writing
@@ -538,9 +537,21 @@ let NERDTreeIgnore = ['\.pyc$', '\.egg-info$', '__pycache__']
 "  Golang  "
 """"""""""""
 
-autocmd BufNewFile,BufRead *.go nnoremap <leader>r :GoRun<CR>
-autocmd BufNewFile,BufRead *.go nnoremap <leader>t :GoTest<CR>
-autocmd FileType go nmap <leader>i <Plug>(go-info)
+" Open :GoDeclsDir with ctrl-g
+nmap <C-g> :GoDeclsDir<cr>
+imap <C-g> <esc>:<C-u>GoDeclsDir<cr>
+
+augroup go
+    autocmd FileType go nnoremap <leader>r :GoRun<CR>
+    autocmd FileType go nnoremap <leader>t :GoTest<CR>
+    autocmd FileType go nnoremap <leader>i :GoImports<CR>
+    autocmd FileType go inoremap <C-i> <C-O>:GoImport
+    " :GoCoverageToggle
+    autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+    " :GoDef but opens in a vertical split
+    autocmd FileType go nmap <Leader>v <Plug>(go-def-vertical)
+augroup END
+
 let g:go_highlight_types = 1
 let g:go_highlight_functions = 1
 let g:go_highlight_fields = 1
@@ -548,6 +559,10 @@ let g:go_highlight_function_calls = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_highlight_function_arguments = 1
+let g:go_highlight_variable_declarations = 1
+let g:go_highlight_variable_assignments = 1
 let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
 let g:go_metalinter_autosave = 1
 let g:go_metalinter_autosave_enabled = ['vet', 'golint']
