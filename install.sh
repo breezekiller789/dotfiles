@@ -187,6 +187,7 @@ install_ranger() {
     pushd $d
     wget http://nongnu.org/ranger/ranger-stable.tar.gz
     tar xvf ranger-stable.tar.gz
+    rm -f ranger-stable.tar.gz
     pushd ranger-*
     make install
     popd
