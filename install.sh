@@ -265,7 +265,6 @@ main() {
 
     if [ $opt_with_ycm -eq 1 ]; then
         info 'Including YCM submodule...'
-        git submodule add https://github.com/Valloric/YouCompleteMe.git _vim/bundle/YouCompleteMe >/dev/null 2>&1 || true
     else
         info 'Excluding YCM submodule...'
         git submodule deinit _vim/bundle/YouCompleteMe >/dev/null 2>&1 || true
