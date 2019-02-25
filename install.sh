@@ -88,7 +88,7 @@ has() {
     hash $1 >/dev/null 2>&1 && return 0
     if [ "$OS" = "Darwin" ]; then
         brew ls --versions $1 >/dev/null 2>&1 && return 0
-    elif [ "$OS" = "Ubuntu" ]; then
+    elif [ "$OS" = "Ubuntu" -o "$OS" = "Debian" ]; then
         if dpkg -s $1 2>/dev/null | grep '^Status' | grep installed; then
             return 0
         fi
@@ -130,6 +130,7 @@ function install_prerequisites {
         tmp=$(mktemp -d)
         for repo in BurntSushi/ripgrep sharkdp/fd; do
             name=$(basename $repo)
+            has $name && continue
             url=$(curl -s https://api.github.com/repos/$repo/releases/latest|\
                 grep -o "browser_download_url.*${name}_.*_amd64.deb"|\
                 grep -o 'https://.*_amd64.deb')
@@ -141,8 +142,10 @@ function install_prerequisites {
         warn 'Please install ctags, silversearcher by hand'
     fi
 
-    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-    ~/.fzf/install --all
+    if [ ! -d ~/.fzf ]; then
+        git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+        ~/.fzf/install --all
+    fi
 }
 
 install_jsxhint() {
@@ -290,7 +293,7 @@ main() {
         install_jsxhint
     fi
 
-    if [ $opt_with_ranger -eq 1 ]; then
+    if [ $opt_with_ranger -eq 1 ] && ! has ranger; then
         install_ranger
     fi
 
