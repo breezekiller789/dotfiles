@@ -49,7 +49,7 @@ get_unified_os_name() {
             issue=`cat /etc/issue`
             if cat /etc/issue | grep -i ubuntu >/dev/null 2>&1; then
                 echo Ubuntu
-            elif cat /etc/issue | grep -i debian >/dev/null 2>&1; then
+            elif cat /etc/issue | grep -iE 'debian|kali' >/dev/null 2>&1; then
                 echo Debian
             fi
             ;;
