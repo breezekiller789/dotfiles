@@ -26,22 +26,26 @@ die() {
 	exit 1
 }
 
-if ps -p $$ -ocommand | tail -n1 | grep '^.*bash' >/dev/null 2>&1; then
-    ECHO_FLAGS=-e
+if echo -e '' | grep -F -- -e >/dev/null 2>&1; then
+	echo_flag=
 else
-    ECHO_FLAGS=
+	echo_flag=-e
 fi
 
 say() {
-    echo $ECHO_FLAGS "\$1"
+    echo $echo_flag "\$1"
+}
+
+good() {
+	say "${green}[+]${white} \$1"
 }
 
 info() {
-    say "${blue}[+]${white} \$1"
+    say "${blue}[*]${white} \$1"
 }
 
 warn() {
-    say "${yellow}[+]${white} \$1"
+    say "${yellow}[*]${white} \$1"
 }
 
 error() {
