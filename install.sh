@@ -136,7 +136,7 @@ function install_prerequisites {
                 grep -o 'https://.*_amd64.deb')
             wget -P "$tmp" "$url"
         done
-        sudo dpkg -i $tmp/*.deb
+        test -n "$(ls -A $tmp/)" && sudo dpkg -i $tmp/*.deb
         rm -rf $tmp
     else
         warn 'Please install ctags, silversearcher by hand'
