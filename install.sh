@@ -86,9 +86,9 @@ function unlink_file {
 
 has() {
     hash $1 >/dev/null 2>&1 && return 0
-    if [ "$OS" = "Darwin" ]; then
+    if hash brew >/dev/null 2>&1; then
         brew ls --versions $1 >/dev/null 2>&1 && return 0
-    elif [ "$OS" = "Ubuntu" -o "$OS" = "Debian" ]; then
+    elif hash dpkg >/dev/null 2>&1; then
         if dpkg -s $1 2>/dev/null | grep '^Status' | grep installed; then
             return 0
         fi
@@ -122,7 +122,7 @@ function install_prerequisites {
         has ag || brew install the_silver_searcher
         has fd || brew install fd
         has rg || brew install ripgrep
-    elif [ "$OS" = "Ubuntu" -o "$OS" = "Debian" ]; then
+    elif has apt-get; then
         sudo apt-get update
         sudo apt-get install -yq --force-yes ctags silversearcher-ag
 
@@ -150,10 +150,13 @@ function install_prerequisites {
 
 install_jsxhint() {
     if ! has npm ; then
-        if [ "$OS" = "Darwin" ]; then
+        if has brew; then
             brew install npm
-        elif [ "$OS" = "Ubuntu" ]; then
+        elif has apt-get; then
             sudo apt-get install npm
+        else
+            error "No available package manager to install npm: skipping jsxhint"
+            return 1
         fi
     fi
 
@@ -168,9 +171,9 @@ install_ycm() {
     for x in cmake clang; do
         if ! has $x; then
             info "Installing $x..."
-            if [ "$OS" = "Darwin" ]; then
+            if has brew; then
                 brew install $x
-            elif [ "$OS" = "Ubuntu" ]; then
+            elif has apt-get; then
                 apt-get install -yq --force-yes $x
             else
                 error "Missing dependency: $x (Please install by hand)"
