@@ -2,6 +2,22 @@ snippet #inc "#include syslib" b
 #include <$1>$0
 endsnippet
 
+snippet #includeall "include all lib that i use often" b
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <unistd.h>
+#define MaxLine 1024
+
+int main(int argc, char *argv[]){
+
+    $0
+
+    return 0;
+}
+endsnippet
+
 snippet #incl "#include customlib" b
 #include "$1"$0
 endsnippet
