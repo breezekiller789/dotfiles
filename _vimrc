@@ -248,11 +248,6 @@ set completeopt=menuone,longest,preview
 set pumheight=6             " Keep a small completion window
 
 
-" weiwei copy-paste
-" set clipboard=unnamedplus
-" set mouse=a
-
-
 """ Moving Around/Editing
 set cursorline              " have a line indicate the cursor location
 set ruler                   " show the cursor position all the time
