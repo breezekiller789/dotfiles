@@ -24,6 +24,7 @@ snippet #includeall "include all lib that i use often" b
 #include <unistd.h>
 #include <math.h>
 #include <fcntl.h>
+#include <limits.h>
 #define MaxLine 1024
 
 int main(int argc, char *argv[]){
@@ -43,7 +44,7 @@ snippet #def "#define" b
 endsnippet
 
 snippet main "main" b
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]){
 	$0
 	return 0;
 }

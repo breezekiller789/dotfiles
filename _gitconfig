@@ -33,4 +33,3 @@
 [credential]
 	helper = cache --timeout=28800
 [gui]
-	recentrepo = /Users/henry/work/projects/dotfiles

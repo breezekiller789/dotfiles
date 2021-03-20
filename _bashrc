@@ -222,3 +222,8 @@ fi
 alias cd..='cd ..'
 export PATH=${PATH}:/usr/local/mysql/bin/
 export PATH=${PATH}:/usr/local/Cellar/gdb/9.1_1/bin/
+export PATH=$PATH:~/Library/Python/2.7/bin
+export PATH=$PATH:/Users/siaoweiwei/Documents/school/AutoBookTKB
+export CLASSPATH=".:/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH"
+alias antlr4='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java -Xmx500M -cp "/usr/local/lib/antlr-4.8-complete.jar:$CLASSPATH" org.antlr.v4.gui.TestRig'

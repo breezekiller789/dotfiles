@@ -133,3 +133,26 @@ def main():
 if __name__ == '__main__':
 	main()
 endsnippet
+
+snippet printlist "A Function to print a linked list" b
+def Print_List(head):
+	tmp = head
+	while tmp:
+		print tmp.val
+		tmp = tmp.next
+endsnippet
+
+snippet ListNode "Class of Linked List Nodes" b
+class ListNode(object):
+	def __init__(self, val=0):
+		self.val = val
+		self.next = None
+endsnippet
+
+snippet TreeNode "Class of Binary Tree Nodes" b
+class TreeNode(object):
+	def __init__(self, val=0):
+		self.val = val
+		self.left = None
+		self.right = None
+endsnippet
