@@ -334,6 +334,7 @@ highlight nonText ctermbg=NONE
 " <leader>R     Rename a class/function/variable
 
 let g:pymode = 1
+let g:pymode_python = 'python'
 let g:pymode_rope = 1
 let g:pymode_rope_completion = 1
 let g:pymode_rope_completion_bind = '<C-\>'
